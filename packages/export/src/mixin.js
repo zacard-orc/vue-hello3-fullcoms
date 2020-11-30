@@ -589,10 +589,15 @@ function checkImportData (columns, fields) {
       tableFields.push(field)
     }
   })
-  return tableFields.every(field => fields.indexOf(field) > -1)
+  const outField = fields.map(el => {
+    console.log(el, el.length)
+    return el.trim()
+  })
+  return tableFields.every(field => outField.indexOf(field) > -1)
 }
 
 function handleImport ($xetable, content, opts) {
+  console.log('handleImport')
   const { tableFullColumn, _importResolve } = $xetable
   let rest = { fields: [], rows: [] }
   switch (opts.type) {
@@ -624,6 +629,7 @@ function handleImport ($xetable, content, opts) {
       VXETable.modal.message({ message: XEUtils.template(GlobalConfig.i18n('vxe.table.impSuccess'), [rows.length]), status: 'success' })
     }
   } else if (opts.message !== false) {
+    console.log(GlobalConfig.i18n('vxe.error.impFields'))
     VXETable.modal.message({ message: GlobalConfig.i18n('vxe.error.impFields'), status: 'error' })
   }
   if (_importResolve) {

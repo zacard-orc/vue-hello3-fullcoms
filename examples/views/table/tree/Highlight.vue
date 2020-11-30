@@ -40,6 +40,9 @@
 import hljs from 'highlight.js'
 import XEUtils from 'xe-utils'
 
+/*
+http://localhost:8080/#/table/tree/highlight
+ */
 export default {
   data () {
     return {

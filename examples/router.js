@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import StartInstall from './views/table/start/Install.vue'
 
 import TableTreeHighlight from './views/table/tree/Highlight.vue'
+import TableTreeHighlightImp from './views/table/tree/HighlightImp.vue'
 
 Vue.use(Router)
 
@@ -573,6 +574,11 @@ export default new Router({
       path: '/table/tree/highlight',
       name: 'TableTreeHighlight',
       component: TableTreeHighlight
+    },
+    {
+      path: '/table/tree/highlightImp',
+      name: 'TableTreeHighlightImp',
+      component: TableTreeHighlightImp
     }
     // {
     //   path: '/table/tree/highlightImp',
