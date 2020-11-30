@@ -140,7 +140,7 @@ function getExportData ($xetable, opts) {
   if (opts.dataFilterMethod) {
     datas = datas.filter(opts.dataFilterMethod)
   }
-  return { columns, datas: getLabelData($xetable, opts, columns, datas) }
+  return { columns, datas: getLabelData($xetable, opts, columns, datas), opts }
 }
 
 function getHeaderTitle (opts, column) {
@@ -402,6 +402,55 @@ function downloadFile ($xetable, opts, content) {
 
 function handleExport ($xetable, opts) {
   const { columns, datas } = getExportData($xetable, opts)
+
+  const [seqCol] = columns.filter(el => el.type === 'seq')
+
+  if (seqCol) {
+    const {
+      id: _selColId
+    } = seqCol
+
+    seqCol.align = 'left'
+
+    const xidMap = {}
+
+    const filterRoot = datas.filter(el => el._level === 0)
+    const sepSym = '.'
+    /*
+     * @params arr Array<T> 数组
+     * @params level Number 层次级别
+     * @params levelPrefix String 层次前缀
+     */
+    const renameId = function (arr, level, levelPrefix) {
+      arr.map((el, idx) => {
+        const chsIdx = idx + 1
+
+        if (level === 0) {
+          xidMap[el._XID] = chsIdx.toString()
+        } else {
+          xidMap[el._XID] = levelPrefix + sepSym + chsIdx
+        }
+
+        if (el.children && el.children.length > 0) {
+          const nextPrefix = level === 0
+            ? chsIdx.toString()
+            : levelPrefix + sepSym + chsIdx
+          renameId(el.children, level + 1, nextPrefix)
+        }
+      })
+    }
+
+    renameId(filterRoot, 0, undefined)
+
+    const {
+      alignSeqPrefix
+    } = opts
+
+    datas.map(el => {
+      el[_selColId] = (alignSeqPrefix || '') + xidMap[el._XID]
+    })
+  }
+
   return Promise.resolve(
     $xetable.preventEvent(null, 'event.export', { options: opts, columns, datas }, () => {
       return downloadFile($xetable, opts, getContent($xetable, opts, columns, datas))
