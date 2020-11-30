@@ -1,44 +1,44 @@
 <template>
   <div id="app" @click="clickEvent">
-    <header class="page-header">
-      <div class="left">
-        <a href="https://github.com/xuliangzhan/vxe-table">
-          <img src="logo.png" width="18">
-          <span class="title">vxe-table</span>
-        </a>
-        <a href='https://gitee.com/xuliangzhan_admin/vxe-table/stargazers'>
-          <img src='https://gitee.com/xuliangzhan_admin/vxe-table/badge/star.svg?theme=dark' alt='star'>
-        </a>
-        <a href="https://github.com/xuliangzhan/vxe-table/stargazers">
-          <img src="https://img.shields.io/github/stars/xuliangzhan/vxe-table.svg">
-        </a>
-        <a href="http://npm-stat.com/charts.html?package=vxe-table">
-          <img src="https://img.shields.io/npm/dm/vxe-table.svg">
-        </a>
-      </div>
-      <div class="right">
-        <div class="content">
-          <span v-if="usedJSHeapSize" class="performance">Memory used: {{ usedJSHeapSize }} MB.</span>
-          <span>{{ $t('app.body.label.translations') }}:</span>
-          <vxe-select class="locale-switch" size="mini" v-model="$i18n.locale">
-            <vxe-option value="zh_CN" label="中文"></vxe-option>
-            <vxe-option value="zh_TC" label="繁體中文"></vxe-option>
-            <vxe-option value="en_US" label="English"></vxe-option>
-            <vxe-option value="ja_JP" label="ジャパン"></vxe-option>
-          </vxe-select>
-          <span>{{ $t('app.body.label.version') }}: </span>
-          <vxe-select class="version-switch" size="mini" v-model="version" @change="vChangeEvent">
-            <vxe-option value="1" label="1.x"></vxe-option>
-            <vxe-option value="2" label="2.x"></vxe-option>
-            <vxe-option value="3" label="3.x"></vxe-option>
-            <vxe-option value="4" label="4.x"></vxe-option>
-          </vxe-select>
-          <vxe-tooltip :content="$t('app.footer.donationDesc')" enterable>
-            <router-link class="donation" :to="{name: 'Donation'}">{{ $t('app.footer.donation') }}☕</router-link>
-          </vxe-tooltip>
-        </div>
-      </div>
-    </header>
+<!--    <header class="page-header">-->
+<!--      <div class="left">-->
+<!--        <a href="https://github.com/xuliangzhan/vxe-table">-->
+<!--          <img src="logo.png" width="18">-->
+<!--          <span class="title">vxe-table</span>-->
+<!--        </a>-->
+<!--        <a href='https://gitee.com/xuliangzhan_admin/vxe-table/stargazers'>-->
+<!--          <img src='https://gitee.com/xuliangzhan_admin/vxe-table/badge/star.svg?theme=dark' alt='star'>-->
+<!--        </a>-->
+<!--        <a href="https://github.com/xuliangzhan/vxe-table/stargazers">-->
+<!--          <img src="https://img.shields.io/github/stars/xuliangzhan/vxe-table.svg">-->
+<!--        </a>-->
+<!--        <a href="http://npm-stat.com/charts.html?package=vxe-table">-->
+<!--          <img src="https://img.shields.io/npm/dm/vxe-table.svg">-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="right">-->
+<!--        <div class="content">-->
+<!--          <span v-if="usedJSHeapSize" class="performance">Memory used: {{ usedJSHeapSize }} MB.</span>-->
+<!--          <span>{{ $t('app.body.label.translations') }}:</span>-->
+<!--          <vxe-select class="locale-switch" size="mini" v-model="$i18n.locale">-->
+<!--            <vxe-option value="zh_CN" label="中文"></vxe-option>-->
+<!--            <vxe-option value="zh_TC" label="繁體中文"></vxe-option>-->
+<!--            <vxe-option value="en_US" label="English"></vxe-option>-->
+<!--            <vxe-option value="ja_JP" label="ジャパン"></vxe-option>-->
+<!--          </vxe-select>-->
+<!--          <span>{{ $t('app.body.label.version') }}: </span>-->
+<!--          <vxe-select class="version-switch" size="mini" v-model="version" @change="vChangeEvent">-->
+<!--            <vxe-option value="1" label="1.x"></vxe-option>-->
+<!--            <vxe-option value="2" label="2.x"></vxe-option>-->
+<!--            <vxe-option value="3" label="3.x"></vxe-option>-->
+<!--            <vxe-option value="4" label="4.x"></vxe-option>-->
+<!--          </vxe-select>-->
+<!--          <vxe-tooltip :content="$t('app.footer.donationDesc')" enterable>-->
+<!--            <router-link class="donation" :to="{name: 'Donation'}">{{ $t('app.footer.donation') }}☕</router-link>-->
+<!--          </vxe-tooltip>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </header>-->
     <div class="page-container">
       <div class="aside">
         <div class="header">
@@ -2078,7 +2078,7 @@ export default {
   },
   methods: {
     init () {
-      this.getVersion()
+      // this.getVersion()
       this.loadList()
       setTimeout(() => this.defaultExpand(), 1500)
     },

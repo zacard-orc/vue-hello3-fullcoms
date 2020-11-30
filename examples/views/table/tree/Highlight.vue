@@ -5,7 +5,12 @@
       <span class="red">(注：树结构不支持大量数据，如果数据量超过 500 条，请谨慎使用！)</span>
     </p>
 
+    <p>
+      <vxe-button @click="exportDataEvent">导出</vxe-button>
+    </p>
+
     <vxe-table
+      ref="xTable"
       highlight-current-row
       :data="tableData"
       :tree-config="{children: 'children'}"
@@ -78,6 +83,15 @@ export default {
     Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
       hljs.highlightBlock(block)
     })
+  },
+  methods: {
+    exportDataEvent () {
+      this.$refs.xTable.exportData({
+        filename: '294导出demo',
+        sheetName: 'Sheet1',
+        type: 'csv'
+      })
+    }
   }
 }
 </script>
