@@ -142,7 +142,9 @@ export default {
       console.log(e)
     },
     importDataEvent (evnt) {
-      cvx(evnt, this, {})
+      cvx(evnt, this, {
+        tree: true
+      })
         .then(res => {
           console.log(res)
         })
