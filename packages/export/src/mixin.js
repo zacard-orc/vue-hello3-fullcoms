@@ -672,6 +672,7 @@ export default {
       if (!opts.sheetName) {
         opts.sheetName = GlobalConfig.i18n('vxe.table.expSheetName')
       }
+
       if (VXETable.exportTypes.indexOf(opts.type) === -1) {
         throw new Error(UtilTools.getLog('vxe.error.notType', [opts.type]))
       }

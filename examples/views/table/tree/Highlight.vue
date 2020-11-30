@@ -44,7 +44,34 @@ export default {
   data () {
     return {
       selectRow: null,
-      tableData: []
+      tableData: [],
+      roleList: [
+        {
+          label: '前端',
+          value: '1',
+          disabled: false
+        },
+        {
+          label: '后端',
+          value: '2',
+          disabled: false
+        },
+        {
+          label: '项目经理',
+          value: '3',
+          disabled: false
+        },
+        {
+          label: '设计师',
+          value: '4',
+          disabled: false
+        },
+        {
+          label: '运维',
+          value: '5',
+          disabled: false
+        }
+      ]
     }
   },
   created () {
@@ -296,8 +323,22 @@ export default {
       this.$refs.xTable.exportData({
         filename: '294导出demo',
         sheetName: 'Sheet1',
-        type: 'csv'
+        type: 'xlsx'
       })
+    },
+    updateRoleList () {
+      // 获取表格中的全量数据
+      const { fullData } = this.$refs.xTable.getTableData()
+      this.roleList.forEach(item => {
+        if (item.value) {
+          // 如果当前选项已经被选过，则禁用
+          item.disabled = fullData.some(row => row.role === item.value)
+        }
+      })
+    },
+    roleChangeEvent (e) {
+      // this.updateRoleList()
+      console.log(e)
     }
   }
 }
