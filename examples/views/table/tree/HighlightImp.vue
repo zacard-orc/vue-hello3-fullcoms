@@ -25,6 +25,7 @@
       :checkbox-config="{range: true}"
       :columns="tableColumnDef"
       :data="tableData"
+      :tree-config="{children: 'children'}"
     >
       <!--      tree -->
       <!--      <vxe-table-column type="seq" title="编号" width="60"></vxe-table-column>-->
@@ -147,45 +148,14 @@ export default {
       })
         .then(res => {
           console.log(res)
+          const {
+            tableData
+          } = res
+          this.tableData = tableData
         })
         .catch(e => {
           console.error(e)
         })
-      // console.log('bbb')
-      // console.log(this)
-      // // this.$refs.xTable.importData()
-      // const files = evnt.target.files
-      // const fileReader = new FileReader()
-      //
-      // fileReader.onload = (ev) => {
-      //   console.log('bbb')
-      //   const data = ev.target.result
-      //   const workbook = XLSX.read(data, { type: 'binary' })
-      //   const csvData = XLSX.utils.sheet_to_csv(workbook.Sheets.Sheet1, {
-      //     FS: '\\$'
-      //   })
-      //   const tableData = []
-      //   console.log(csvData)
-      //   // 解析数据
-      //   csvData.split('\n').forEach((vRow) => {
-      //     if (vRow) {
-      //       const vCols = vRow.split('\\$')
-      //       const item = {}
-      //       vCols.forEach((val, cIndex) => {
-      //         const column = this.tableColumnDef[cIndex]
-      //         if (column.field) {
-      //           item[column.field] = val
-      //         }
-      //       })
-      //       tableData.push(item)
-      //     }
-      //   })
-      //   tableData.shift()
-      //   this.tableData = tableData
-      //   console.log(this.tableData)
-      //   evnt.target.value = ''
-      // }
-      // fileReader.readAsBinaryString(files[0])
     },
     clearData () {
       this.tableData = []

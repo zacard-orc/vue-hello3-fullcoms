@@ -3,9 +3,22 @@
  * @param {object} vm 组件实例
  * @param {object} opt 选项
  * @param {string} opt.FS 使用什么分割符号切割每一行字段，默认使用\\$，防止内容内出现逗号
- * @param {string} opt.tmout 解析超时
+ * @param {number} opt.tmout 解析超时
+ * @param {boolean} opt.tree 是否树形目录
  */
 import XLSX from 'xlsx'
+
+class Node {
+  constructor (nid, value) {
+    this.fullNid = nid
+    this.item = value
+    this.children = []
+  }
+
+  addChild (item) {
+    this.children.push(item)
+  }
+}
 
 export const cvx = (evnt, vm, {
   FS = '\\$',
@@ -32,27 +45,103 @@ export const cvx = (evnt, vm, {
         }).split('\n')
 
         const tableData = []
+        const nodeMap = {}
+        const nodeRoot = []
         const headArr = csvData.shift().split(FS)
         const head = {}
         // eslint-disable-next-line no-return-assign
         headArr.forEach(el => head[el] = el)
 
-        if (tree) {
-          // todo 预先遍历一把
+        csvData.reduce((prev, vRow, idx) => {
+          if (vRow) {
+            const vCols = vRow.split(FS)
 
-        } else {
-          csvData.forEach((vRow) => {
-            if (vRow) {
-              const vCols = vRow.split(FS)
-              const item = {}
-              vCols.forEach((val, cIndex) => {
-                const column = headArr[cIndex]
-                item[column] = val
-              })
-              tableData.push(item)
+            if (vCols.length === 0) {
+              reject(new Error('not enough fields'))
             }
-          })
-        }
+
+            const item = {}
+            vCols.forEach((val, cIndex) => {
+              const column = headArr[cIndex]
+              item[column] = val
+            })
+
+            if (!tree) {
+              tableData.push(item)
+              return
+            }
+
+            const colId = vCols[0].replace(/^[\D ]+/, '')
+            const colIdSep = colId.split('.')
+
+            // const node = new Node(colId, item)
+            // nodeMap[colId] = node
+
+            // const node = new Node(colId, item)
+            nodeMap[colId] = item
+            console.log(nodeMap)
+
+            if (colIdSep.length > 1) {
+              if (colIdSep.length > prev.tid.length) {
+                /* deep 3.1
+                /* deep 3.1.1
+                 *
+                 */
+
+                console.log('prev.tidShort => ', prev.tidShort, typeof prev.tidShort)
+                // nodeMap[prev.tidShort].addChild(node)
+                console.log('keys => ', Object.keys(nodeMap))
+                console.log('node => ', nodeMap[prev.tidShort])
+                nodeMap[prev.tidShort].children
+                  ? nodeMap[prev.tidShort].children.push(item)
+                  : nodeMap[prev.tidShort].children = [item]
+              } else {
+                /* brother & float
+                 * brother 3.1
+                 *         3.2
+                 *         3.3
+                 *         3.4
+                 *
+                 * float 3.1.1
+                 * float 3.1.1.1
+                 * float 3.1.1.2
+                 * float 3.1.1.3
+                 * float 3.1.2
+                 *
+                 * float 3.0
+                 * float 3.1
+                 * float 3.1.1
+                 * float 3.1.1.1
+                 * float 3.1.1.2
+                 * float 3.1.1.3
+                 * float 3.2
+                 *
+                 */
+
+                const bro = []
+                Object.assign(bro, colIdSep)
+                bro.pop()
+                // nodeMap[bro.join('.')].addChild(node)
+                nodeMap[bro.join('.')].children
+                  ? nodeMap[bro.join('.')].children.push(item)
+                  : nodeMap[bro.join('.')].children = [item]
+              }
+              console.log(nodeMap)
+            } else {
+              // nodeRoot.push(node)
+              nodeRoot.push(item)
+            }
+
+            prev = {
+              ...item,
+              tid: colIdSep,
+              tidShort: colId
+            }
+            return prev
+          }
+        }, {})
+
+        console.log(nodeRoot)
 
         evnt.target.value = ''
         resolve({

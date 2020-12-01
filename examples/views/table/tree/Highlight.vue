@@ -303,7 +303,10 @@ export default {
         gy: '铰链冲压计算公式',
         djzl: '1.5',
         role: 2,
-        ddtime: '2020-08-13'
+        ddtime: '2020-08-13',
+        children: [
+
+        ]
       },
       {
         // id: 5000,
@@ -312,7 +315,10 @@ export default {
         gy: '铰链冲压计算公式',
         djzl: '1.5',
         role: 1,
-        ddtime: '2020-07-26'
+        ddtime: '2020-07-26',
+        children: [
+
+        ]
       }
     ]
   },
