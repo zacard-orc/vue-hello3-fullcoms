@@ -46,7 +46,6 @@ export const cvx = (evnt, vm, {
 
         const tableData = []
         const nodeMap = {}
-        const nodeRoot = []
         const headArr = csvData.shift().split(FS)
         const head = {}
         // eslint-disable-next-line no-return-assign
@@ -74,12 +73,8 @@ export const cvx = (evnt, vm, {
             const colId = vCols[0].replace(/^[\D ]+/, '')
             const colIdSep = colId.split('.')
 
-            // const node = new Node(colId, item)
-            // nodeMap[colId] = node
-
-            // const node = new Node(colId, item)
+            item.seqId = colId
             nodeMap[colId] = item
-            console.log(nodeMap)
 
             if (colIdSep.length > 1) {
               if (colIdSep.length > prev.tid.length) {
@@ -88,10 +83,6 @@ export const cvx = (evnt, vm, {
                  *
                  */
 
-                console.log('prev.tidShort => ', prev.tidShort, typeof prev.tidShort)
-                // nodeMap[prev.tidShort].addChild(node)
-                console.log('keys => ', Object.keys(nodeMap))
-                console.log('node => ', nodeMap[prev.tidShort])
                 nodeMap[prev.tidShort].children
                   ? nodeMap[prev.tidShort].children.push(item)
                   : nodeMap[prev.tidShort].children = [item]
@@ -121,15 +112,12 @@ export const cvx = (evnt, vm, {
                 const bro = []
                 Object.assign(bro, colIdSep)
                 bro.pop()
-                // nodeMap[bro.join('.')].addChild(node)
                 nodeMap[bro.join('.')].children
                   ? nodeMap[bro.join('.')].children.push(item)
                   : nodeMap[bro.join('.')].children = [item]
               }
-              console.log(nodeMap)
             } else {
-              // nodeRoot.push(node)
-              nodeRoot.push(item)
+              tableData.push(item)
             }
 
             prev = {
@@ -141,7 +129,7 @@ export const cvx = (evnt, vm, {
           }
         }, {})
 
-        console.log(nodeRoot)
+        console.log(tableData)
 
         evnt.target.value = ''
         resolve({
