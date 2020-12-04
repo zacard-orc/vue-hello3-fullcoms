@@ -426,9 +426,9 @@ function handleExport ($xetable, opts) {
         const chsIdx = idx + 1
 
         if (level === 0) {
-          xidMap[el._XID] = chsIdx.toString()
+          xidMap[el._XID || el.id] = chsIdx.toString()
         } else {
-          xidMap[el._XID] = levelPrefix + sepSym + chsIdx
+          xidMap[el._XID || el.id] = levelPrefix + sepSym + chsIdx
         }
 
         if (el.children && el.children.length > 0) {
@@ -447,7 +447,7 @@ function handleExport ($xetable, opts) {
     } = opts
 
     datas.map(el => {
-      el[_selColId] = (alignSeqPrefix || '') + xidMap[el._XID]
+      el[_selColId] = (alignSeqPrefix || '') + xidMap[el._XID || el.id]
     })
   }
 

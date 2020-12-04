@@ -1,19 +1,22 @@
 <template>
   <div>
     <p class="tip">
-      键盘移动高亮行，设置 <table-api-link prop="keyboard-config"/>={isArrow: true, isEnter: true} 启用方向键功能<br>
+      键盘移动高亮行，设置
+      <table-api-link prop="keyboard-config"/>
+      ={isArrow: true, isEnter: true} 启用方向键功能<br>
       <span class="red">(注：树结构不支持大量数据，如果数据量超过 500 条，请谨慎使用！)</span>
     </p>
 
     <p>
-<!--      <vxe-button @click="importDataEvent">导入aa</vxe-button>-->
-<!--      <template v-slot:buttons>-->
+      <!--      <vxe-button @click="importDataEvent">导入aa</vxe-button>-->
+      <!--      <template v-slot:buttons>-->
       <vxe-button>
         <input type="file" @change="importDataEvent" accept=".xls,.xlsx,.csv">
       </vxe-button>
 
-<!--      </template>-->
+      <!--      </template>-->
       <vxe-button @click="clearData">清空</vxe-button>
+      <vxe-button @click="exportDataEvent">导出</vxe-button>
     </p>
 
     <vxe-grid
@@ -37,12 +40,12 @@
       <!--      <vxe-table-column field="role" title="角色" :edit-render="{name: '$select', options: roleList, props: {clearable: true, multiple: true}, events: {change: roleChangeEvent}}"></vxe-table-column>-->
       <!--      <vxe-table-column field="ddtime" title="日期" :edit-render="{name: '$input', props: {type: 'date'}, events: {change: roleChangeEvent} }"></vxe-table-column>-->
 
-<!--      <vxe-table-column type="seq" width="60"></vxe-table-column>-->
-<!--      <vxe-table-column field="name" title="Name"></vxe-table-column>-->
-<!--      <vxe-table-column field="sex" title="Sex"></vxe-table-column>-->
-<!--      <vxe-table-column field="age" title="Age" sortable></vxe-table-column>-->
-<!--      <vxe-table-column field="boom" title="Boom" sortable></vxe-table-column>-->
-<!--      <vxe-table-column field="address" title="Address" show-overflow></vxe-table-column>-->
+      <!--      <vxe-table-column type="seq" width="60"></vxe-table-column>-->
+      <!--      <vxe-table-column field="name" title="Name"></vxe-table-column>-->
+      <!--      <vxe-table-column field="sex" title="Sex"></vxe-table-column>-->
+      <!--      <vxe-table-column field="age" title="Age" sortable></vxe-table-column>-->
+      <!--      <vxe-table-column field="boom" title="Boom" sortable></vxe-table-column>-->
+      <!--      <vxe-table-column field="address" title="Address" show-overflow></vxe-table-column>-->
       <!--      <vxe-table-column field="name" title="Name" tree-node></vxe-table-column>-->
       <!--      <vxe-table-column field="size" title="Size"></vxe-table-column>-->
       <!--      <vxe-table-column field="type" title="Type"></vxe-table-column>-->
@@ -74,9 +77,11 @@ import XLSX from 'xlsx'
 
 import { cvx } from './cvx'
 
+// import { cvx } from 'zacard-cvx'
+
 /*
-http://localhost:8080/#/table/tree/highlightImp
- */
+  http://localhost:8080/#/table/tree/highlightImp
+   */
 export default {
   data () {
     return {
@@ -84,18 +89,18 @@ export default {
       selectRow: null,
       demoCodes: [],
       tableColumnDef: [
-        // { field: 'name', title: 'Name' },
-        // { field: 'sex', title: 'Sex', formatter: this.formatterSex },
-        // { field: 'age', title: 'Age' },
-        // { field: 'boom', title: 'Boom', showOverflow: true }
+        { field: 'name', title: 'Name' },
+        { field: 'sex', title: 'Sex', formatter: this.formatterSex },
+        { field: 'age', title: 'Age' },
+        { field: 'boom', title: 'Boom', showOverflow: true }
 
-        { field: 'seqId', title: '编号', treeNode: true },
-        { field: '零件名称', title: '零件名称' },
-        { field: '材料', title: '材料' },
-        { field: '工艺', title: '工艺' },
-        { field: '单件重量', title: '单件重量' },
-        { field: '角色', title: '角色' },
-        { field: '日期', title: '日期' }
+        // { field: 'seqId', title: '编号', treeNode: true },
+        // { field: '零件名称', title: '零件名称' },
+        // { field: '材料', title: '材料' },
+        // { field: '工艺', title: '工艺' },
+        // { field: '单件重量', title: '单件重量' },
+        // { field: '角色', title: '角色' },
+        // { field: '日期', title: '日期' }
 
         // { field: 'seqId', title: 'ID', treeNode: true },
         // { field: 'ljmc', title: '零件名称' },
@@ -137,250 +142,6 @@ export default {
   created () {
     // this.tableData = XEUtils.clone(window.MOCK_TREE_DATA_LIST, true)
     // this.tableData = []
-
-    // this.tableData = [
-    //   {
-    //     // id: 1000,
-    //     ljmc: '新风口',
-    //     cl: ' 金属',
-    //     gy: '铰链冲压计算公式',
-    //     djzl: '1.5',
-    //     role: '运维',
-    //     ddtime: '2020-01-01',
-    //     children: [
-    //       {
-    //         // id: 1100,
-    //         // parentId: 1000,
-    //         ljmc: '新风口密封条',
-    //         cl: ' 金属',
-    //         gy: '铰链冲压计算公式',
-    //         djzl: '1.5',
-    //         role: 1,
-    //         ddtime: '2020-03-01'
-    //       },
-    //       {
-    //         // id: 1200,
-    //         // parentId: 1000,
-    //         ljmc: '螺钉-内外循环内门执行器a',
-    //         cl: ' 金属',
-    //         gy: '铰链冲压计算公式',
-    //         djzl: '1.5',
-    //         role: 2,
-    //         ddtime: '2020-04-01',
-    //         children: [
-    //           {
-    //             ljmc: '螺钉-内外循环内门执行器aa',
-    //             cl: ' 金属',
-    //             gy: '铰链冲压计算公式',
-    //             djzl: '1.5',
-    //             role: 3,
-    //             ddtime: '2020-05-01'
-    //           },
-    //           {
-    //             ljmc: '螺钉-内外循环内门执行器bb',
-    //             cl: ' 金属',
-    //             gy: '铰链冲压计算公式',
-    //             djzl: '1.5',
-    //             role: 3,
-    //             ddtime: '2020-06-01'
-    //           }
-    //         ]
-    //       },
-    //       {
-    //         // id: 1100,
-    //         // parentId: 1000,
-    //         ljmc: '新风口密封条world',
-    //         cl: ' 金属',
-    //         gy: '铰链冲压计算公式',
-    //         djzl: '1.5',
-    //         role: 2,
-    //         ddtime: '2020-07-01'
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     // id: 2000,
-    //     ljmc: '螺钉-新风口到鼓机单元',
-    //     cl: ' 金属',
-    //     gy: '铰链冲压计算公式',
-    //     djzl: '1.5',
-    //     role: 1,
-    //     ddtime: '2020-09-01',
-    //     children: [
-    //       {
-    //         ljmc: '多米尼克',
-    //         cl: '塑料',
-    //         gy: '微信啦啦啦啦',
-    //         djzl: '1.6',
-    //         role: 3,
-    //         ddtime: '2020-09-01'
-    //       },
-    //       {
-    //         ljmc: '多米尼克5555',
-    //         cl: '塑料',
-    //         gy: '微信啦啦啦啦',
-    //         djzl: '1.7',
-    //         role: 2,
-    //         ddtime: '2020-02-01'
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     // id: 3000,
-    //     ljmc: '新风口',
-    //     cl: ' 金属',
-    //     gy: '铰链冲压计算公式',
-    //     djzl: '1.5',
-    //     role: 2,
-    //     ddtime: '2020-02-01',
-    //     children: [
-    //       {
-    //         ljmc: '新风口密封条',
-    //         cl: ' 金属',
-    //         gy: '铰链冲压计算公式',
-    //         djzl: '1.5',
-    //         role: 4,
-    //         ddtime: '2020-02-01',
-    //         children: [{
-    //           ljmc: 'aaa',
-    //           cl: ' bb',
-    //           gy: '铰链冲压计算公式',
-    //           djzl: '1.5',
-    //           role: 4,
-    //           ddtime: '2020-01-01'
-    //         },
-    //         {
-    //           ljmc: 'bbbb',
-    //           cl: ' aa',
-    //           gy: '铰链冲压计算公式',
-    //           djzl: '1.5',
-    //           role: 5,
-    //           ddtime: '2020-08-01'
-    //         }
-    //         ]
-    //       }, {
-    //         ljmc: '螺钉-内外循环内门执行器b',
-    //         cl: ' 金属',
-    //         gy: '铰链冲压计算公式',
-    //         djzl: '1.5',
-    //         role: 2,
-    //         ddtime: '2020-09-01',
-    //         children: [
-    //           {
-    //             ljmc: '螺钉-内外循环内门执行器bb',
-    //             cl: ' 金属',
-    //             gy: '铰链冲压计算公式',
-    //             djzl: '1.5',
-    //             role: 4,
-    //             ddtime: '2020-01-01'
-    //           }, {
-    //             ljmc: '螺钉-内外循环内门执行器bb',
-    //             cl: ' 金属',
-    //             gy: '铰链冲压计算公式',
-    //             djzl: '1.5',
-    //             role: 5,
-    //             ddtime: '2020-02-01'
-    //           }, {
-    //             ljmc: '螺钉-内外循环内门执行器bb',
-    //             cl: ' 金属',
-    //             gy: '铰链冲压计算公式',
-    //             djzl: '1.5',
-    //             role: 1,
-    //             ddtime: '2020-09-01',
-    //             children: [
-    //               {
-    //                 ljmc: '螺钉-内外循环内门执行器bbb',
-    //                 cl: ' 金属',
-    //                 gy: '铰链冲压计算公式',
-    //                 djzl: '1.5',
-    //                 role: 2,
-    //                 ddtime: '2020-01-01',
-    //                 children: [
-    //                   {
-    //                     ljmc: '螺钉-内外循环内门执行器bbbb',
-    //                     cl: ' 金属',
-    //                     gy: '铰链冲压计算公式',
-    //                     djzl: '1.5',
-    //                     role: 3,
-    //                     ddtime: '2020-04-01'
-    //                   }
-    //                 ]
-    //               }
-    //             ]
-    //           }
-    //         ]
-    //       },
-    //       {
-    //         ljmc: '螺钉-123内外循2环内门执行器z',
-    //         cl: ' 金属',
-    //         gy: '铰链冲压计算公式',
-    //         djzl: '1.5',
-    //         role: 2,
-    //         ddtime: '2020-01-01',
-    //         children: [
-    //           {
-    //             ljmc: '螺钉-123内外循2环内门执行器zz',
-    //             cl: ' 金属',
-    //             gy: '铰链冲压计算公式',
-    //             djzl: '1.5',
-    //             role: 1,
-    //             ddtime: '2020-10-01'
-    //           },
-    //           {
-    //             ljmc: '螺钉-123内外循2环内门执行器zz',
-    //             cl: ' 金属',
-    //             gy: '铰链冲压计算公式',
-    //             djzl: '1.5',
-    //             role: 2,
-    //             ddtime: '2020-02-01',
-    //             children: [
-    //               {
-    //                 ljmc: '螺钉-123内外循2环内门执行器zzz',
-    //                 cl: ' 金属',
-    //                 gy: '铰链冲压计算公式',
-    //                 djzl: '1.5',
-    //                 role: 3,
-    //                 ddtime: '2020-03-04',
-    //                 children: [{
-    //                   ljmc: '螺钉-123内外循2环内门执行器zzzz',
-    //                   cl: ' 金属',
-    //                   gy: '铰链冲压计算公式',
-    //                   djzl: '1.5',
-    //                   role: 2,
-    //                   ddtime: '2020-02-11'
-    //                 }]
-    //               }
-    //             ]
-    //           }
-    //         ]
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     // id: 4000,
-    //     ljmc: '新风单元及蒸发器单元',
-    //     cl: ' 塑料',
-    //     gy: '铰链冲压计算公式',
-    //     djzl: '1.5',
-    //     role: 2,
-    //     ddtime: '2020-08-13',
-    //     children: [
-    //
-    //     ]
-    //   },
-    //   {
-    //     // id: 5000,
-    //     ljmc: '新风单元及蒸发器单元',
-    //     cl: ' 塑料',
-    //     gy: '铰链冲压计算公式',
-    //     djzl: '1.5',
-    //     role: 1,
-    //     ddtime: '2020-07-26',
-    //     children: [
-    //
-    //     ]
-    //   }
-    // ]
   },
   mounted () {
     Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
@@ -416,6 +177,13 @@ export default {
         .catch(e => {
           console.error(e)
         })
+    },
+    exportDataEvent () {
+      this.$refs.xTable.exportData({
+        filename: '2012导出demo',
+        sheetName: 'Sheet1',
+        type: 'xlsx'
+      })
     },
     clearData () {
       this.tableData = []

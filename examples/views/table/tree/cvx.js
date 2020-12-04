@@ -8,18 +8,6 @@
  */
 import XLSX from 'xlsx'
 
-class Node {
-  constructor (nid, value) {
-    this.fullNid = nid
-    this.item = value
-    this.children = []
-  }
-
-  addChild (item) {
-    this.children.push(item)
-  }
-}
-
 export const cvx = (evnt, vm, {
   FS = '\\$',
   tmout = 3000,
@@ -52,7 +40,7 @@ export const cvx = (evnt, vm, {
         headArr.forEach(el => head[el] = el)
 
         csvData.reduce((prev, vRow, idx) => {
-          if (vRow) {
+          if (vRow && vRow.length > 0) {
             const vCols = vRow.split(FS)
 
             if (vCols.length === 0) {
@@ -75,6 +63,8 @@ export const cvx = (evnt, vm, {
 
             item.seqId = colId
             nodeMap[colId] = item
+
+            console.log(vRow)
 
             if (colIdSep.length > 1) {
               if (colIdSep.length > prev.tid.length) {
@@ -128,8 +118,6 @@ export const cvx = (evnt, vm, {
             return prev
           }
         }, {})
-
-        console.log(tableData)
 
         evnt.target.value = ''
         resolve({
