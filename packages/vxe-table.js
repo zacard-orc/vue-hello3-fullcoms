@@ -2,7 +2,6 @@ import XEUtils from 'xe-utils/methods/xe-utils'
 import VXETable from './v-x-e-table'
 
 import Radio from './radio'
-import Input from './input'
 import Button from './button'
 
 import zhCN from './locale/lang/zh-CN'
@@ -10,9 +9,7 @@ import zhCN from './locale/lang/zh-CN'
 // 按需加载的组件
 const components = [
   // 模块
-
   Radio,
-  Input,
   Button
 ]
 
@@ -37,7 +34,6 @@ if (typeof window !== 'undefined' && window.Vue && window.Vue.use) {
 
 export * from './v-x-e-table'
 export * from './radio'
-export * from './input'
 export * from './button'
 
 

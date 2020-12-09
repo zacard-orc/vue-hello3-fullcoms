@@ -1,5 +1,3 @@
-import { UtilTools } from '../../tools'
-import GlobalConfig from '../../conf'
 
 export default {
   name: 'VxeRadio',
@@ -10,7 +8,7 @@ export default {
     content: [String, Number],
     disabled: Boolean,
     name: String,
-    size: { type: String, default: () => GlobalConfig.radio.size || GlobalConfig.size }
+    size: { type: String, default: () => 'primary' }
   },
   inject: {
     $xegroup: {
@@ -67,7 +65,7 @@ export default {
       }),
       h('span', {
         class: 'vxe-radio--label'
-      }, $slots.default || [UtilTools.getFuncText(content)])
+      }, $slots.default || [])
     ])
   }
 }

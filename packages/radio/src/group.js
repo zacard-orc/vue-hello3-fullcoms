@@ -1,11 +1,10 @@
 import XEUtils from 'xe-utils/methods/xe-utils'
-import GlobalConfig from '../../conf'
 
 export default {
   name: 'VxeRadioGroup',
   props: {
     value: [String, Number],
-    size: { type: String, default: () => GlobalConfig.radio.size || GlobalConfig.size }
+    size: { type: String, default: () => 'primary' }
   },
   provide () {
     return {
