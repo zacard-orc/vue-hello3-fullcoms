@@ -140,11 +140,12 @@ gulp.task('build_style', gulp.series('build_modules', 'build_i18n', 'copy_ts', (
   }))
 }))
 
-gulp.task('build_clean', gulp.series('build_style', 'lib_rename', () => {
-  return gulp.src([
-    'lib/demo.html'
-  ])
-    .pipe(clean())
+gulp.task('build_clean', gulp.series('build_style', () => {
+  // return gulp.src([
+  //   //   'lib/demo.html'
+  //   // ])
+  //   //   .pipe(clean())
+  return Promise.resolve('ok')
 }))
 
 gulp.task('build', gulp.parallel('build_clean'))

@@ -7,7 +7,7 @@
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build",
     "lib:modules": "gulp build",
-    "lib:pack": "vue-cli-service build --target lib --name index --dest lib index.js",
+    "lib:pack": "vue-cli-service build --target lib --name index --dest lib index.js --verbose",
     "lib": "npm run lib:pack && npm run lib:modules"
   },
   "files": [
@@ -83,7 +83,7 @@
     "xe-clipboard": "^1.7.2",
     "xe-utils": "^2.4.5",
     "xlsx": "^0.15.6",
-    "zacard-cvx": "^1.1.0"
+    "zacard-cvx": "1.1.0"
   },
   "peerDependencies": {
     "vue": ">= 2.6.0 < 3",
