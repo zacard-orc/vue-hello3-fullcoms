@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// import StartInstall from './views/table/start/Install.vue'
 import Button from './views/button/Button'
-
-import TableTreeHighlight from './views/table/tree/Highlight.vue'
-import TableTreeHighlightImp from './views/table/tree/HighlightImp.vue'
+import Radio from './views/radio/Radio'
 
 Vue.use(Router)
 
@@ -19,20 +16,15 @@ export default new Router({
       component: Button
     },
     {
+      path: '/radio',
+      name: 'Radio',
+      component: Radio
+    },
+    {
       path: '/',
       redirect: {
         name: 'Button'
       }
-    },
-    {
-      path: '/table/tree/highlight',
-      name: 'TableTreeHighlight',
-      component: TableTreeHighlight
-    },
-    {
-      path: '/table/tree/highlightImp',
-      name: 'TableTreeHighlightImp',
-      component: TableTreeHighlightImp
     }
   ]
 })
