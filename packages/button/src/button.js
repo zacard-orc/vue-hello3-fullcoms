@@ -167,7 +167,7 @@ export default {
       }
     },
     updateZindex () {
-
+      return 1
     },
     clickDropdownEvent (evnt) {
       const dropdownElem = evnt.currentTarget

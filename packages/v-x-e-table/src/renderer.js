@@ -184,7 +184,7 @@ function nativeEditRender (h, renderOpts, params) {
 }
 
 function defaultEditRender (h, renderOpts, params) {
-
+  return true
 }
 
 function defaultButtonEditRender (h, renderOpts, params) {
@@ -273,7 +273,7 @@ function nativeSelectEditRender (h, renderOpts, params) {
 }
 
 function defaultSelectEditRender (h, renderOpts, params) {
-
+  return true
 }
 
 function getSelectCellValue (renderOpts, { row, column }) {

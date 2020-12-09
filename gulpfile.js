@@ -10,36 +10,8 @@ const cleanCSS = require('gulp-clean-css')
 const prefixer = require('gulp-autoprefixer')
 
 const components = [
-  'icon',
-  'table',
-  'column',
-  'cell',
-  'header',
-  'body',
-  'footer',
-  'filter',
-  'loading',
-  'menu',
-  'export',
-  'toolbar',
-  'grid',
-  'pager',
-  'checkbox',
   'radio',
-  'input',
-  'textarea',
   'button',
-  'modal',
-  'tooltip',
-  'form',
-  'select',
-  'switch',
-  'list',
-
-  'edit',
-  'keyboard',
-  'validator',
-  'resize',
   'v-x-e-table'
 ]
 
