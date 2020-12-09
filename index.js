@@ -5,3 +5,5 @@ import VXETable from './packages/vxe-table'
 
 export * from './packages/vxe-table'
 export default VXETable
+
+console.log('aaaaa')
