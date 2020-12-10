@@ -83,7 +83,7 @@
     "xe-clipboard": "^1.7.2",
     "xe-utils": "^2.4.5",
     "xlsx": "^0.15.6",
-    "zacard-cvx": "^1.1.0"
+    "zacard-cvx": "^1.3.0"
   },
   "peerDependencies": {
     "vue": ">= 2.6.0 < 3",

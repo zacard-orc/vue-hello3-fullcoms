@@ -75,9 +75,12 @@ import hljs from 'highlight.js'
 import XEUtils from 'xe-utils'
 import XLSX from 'xlsx'
 
-import { cvx } from './cvx'
+// import { cvx } from './cvx'
 
-// import { cvx } from 'zacard-cvx'
+import { cvx } from 'zacard-cvx'
+
+// speed.xlsx 测试，红色
+//
 
 /*
   http://localhost:8080/#/table/tree/highlightImp
@@ -165,6 +168,7 @@ export default {
     },
     importDataEvent (evnt) {
       cvx(evnt, this, {
+        colDef: this.tableColumnDef,
         tree: true
       })
         .then(res => {

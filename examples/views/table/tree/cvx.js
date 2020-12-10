@@ -9,6 +9,7 @@
 import XLSX from 'xlsx'
 
 export const cvx = (evnt, vm, {
+  colDef,
   FS = '\\$',
   tmout = 3000,
   tree = false
@@ -22,6 +23,14 @@ export const cvx = (evnt, vm, {
 
   const evPr = new Promise((resolve, reject) => {
     try {
+      const webColDefMap = colDef.reduce((prev, el) => {
+        prev[el.title] = el.field
+        return prev
+      }, {})
+
+      const hitCol = new Set()
+      const unhitCol = new Set()
+
       const files = evnt.target.files
       const fileReader = new FileReader()
 
@@ -37,7 +46,9 @@ export const cvx = (evnt, vm, {
         const headArr = csvData.shift().split(FS)
         const head = {}
         // eslint-disable-next-line no-return-assign
-        headArr.forEach(el => head[el] = el)
+        headArr.forEach(el => {
+          head[el] = webColDefMap[el]
+        })
 
         csvData.reduce((prev, vRow, idx) => {
           if (vRow && vRow.length > 0) {
@@ -50,7 +61,13 @@ export const cvx = (evnt, vm, {
             const item = {}
             vCols.forEach((val, cIndex) => {
               const column = headArr[cIndex]
-              item[column] = val
+              webColDefMap[column]
+                ? item[webColDefMap[column]] = val
+                : item[column] = val
+
+              webColDefMap[column]
+                ? hitCol.add(column)
+                : unhitCol.add(column)
             })
 
             if (!tree) {
@@ -123,7 +140,11 @@ export const cvx = (evnt, vm, {
         resolve({
           headMap: head,
           headArr,
-          tableData
+          tableData,
+          hitResult: {
+            hitCol: Array.from(hitCol),
+            unhitCol: Array.from(unhitCol)
+          }
         })
       }
       fileReader.readAsBinaryString(files[0])
